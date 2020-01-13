@@ -94,7 +94,7 @@ export SUBARCH=arm64
 # export CLANG_TREPLE=aarch64-linux-gnu-
 
 # Cross Compiler Setup
-export CROSS_COMPILE="$PWD/Toolchain/bin/aarch64-opt-linux-android-"
+export CROSS_COMPILE="$PWD/Toolchain/bin/aarch64-linux-android-"
 # export CROSS_COMPILE_ARM32="$PWD/Toolchain-32/bin/arm-opt-linux-androideabi-"
 
 # Customize Build Host and User
@@ -103,6 +103,7 @@ export KBUILD_BUILD_HOST="TNR Drone"
 
 # Defind Kernel Binary
 export IMG=$PWD/out/arch/arm64/boot/Image.gz-dtb
+export WLAN=$PWD/out/drivers/staging/prima/wlan.ko
 
 # Used for Telegram
 export VERSION_TG="Testing"
@@ -113,19 +114,25 @@ export BUILD_TYPE="CI"
 
 # sudo apt install bc -y
 
+apt update
+
+apt install python2 python3 -y
+
+ln -s /usr/bin/python2 /usr/bin/python
+
 # Telegram Stuff 
 
-tg_channelcast "#########################"
+# tg_channelcast "#########################"
 
 tg_sendstick
 
-tg_channelcast "<b>MIUI Kernel $VERSION_TG</b> new build!" \
+# tg_channelcast "<b>MIUI Kernel $VERSION_TG</b> new build!" \
 		"Stage: <b>?</b>" \
 		"From <b>Nito Kernel MIUI</b>" \
 		"Under commit <b>$(git log --pretty=format:'%h' -1)</b>"
 
 # Clone Toolchain
-git clone https://github.com/krasCGQ/aarch64-linux-android -b opt-gnu-8.x --depth=1 Toolchain
+git clone https://github.com/LineageOS/android_prebuilts_gcc_linux-x86_aarch64_aarch64-linux-android-4.9 --depth=1 Toolchain
 # git clone https://github.com/krasCGQ/arm-linux-androideabi -b opt-gnu-8.x --depth=1 Toolchain-32
 
 # Customize Compiler Name
@@ -142,6 +149,8 @@ export BUILD_POINT=$(git log --pretty=format:'%h' -1)
 
 # Pack
 cp $IMG nito-ak3/
+rm nito-ak3/modules/system/lib/modules/placeholder
+cp $WLAN nito-ak3/modules/system/lib/modules
 cd nito-ak3/
 zip -r9 -9 "Nito-Kernel-$ZIP_VERSION-$BUILD_TYPE-$BUILD_POINT.zip" .
 md5sum Nito-Kernel-$ZIP_VERSION-$BUILD_TYPE-$BUILD_POINT.zip >> "md5sum_$(git log --pretty=format:'%h' -1).md5sum"
