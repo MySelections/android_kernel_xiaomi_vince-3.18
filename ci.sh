@@ -116,7 +116,7 @@ export BUILD_TYPE="CI"
 
 apt update
 
-apt install python2 python3 perl openssl openssl-dev -y
+apt install python2 python3 perl openssl -y
 
 ln -s /usr/bin/python2 /usr/bin/python
 
