@@ -114,9 +114,7 @@ export BUILD_TYPE="CI"
 
 # sudo apt install bc -y
 
-apt update
-
-apt install python2 python3 perl openssl -y
+# Compiler Need Python
 
 ln -s /usr/bin/python2 /usr/bin/python
 
