@@ -106,8 +106,8 @@ export IMG=$PWD/out/arch/arm64/boot/Image.gz-dtb
 export WLAN=$PWD/out/drivers/staging/prima/wlan.ko
 
 # Used for Telegram
-export VERSION_TG="Testing"
-export ZIP_VERSION="NOVER"
+export VERSION_TG="MIUI"
+export ZIP_VERSION="MIUI"
 export BUILD_TYPE="CI"
 
 # Install depth for Semaphore
@@ -116,7 +116,7 @@ export BUILD_TYPE="CI"
 
 apt update
 
-apt install python2 python3 -y
+apt install python2 python3 perl openssl openssl-dev -y
 
 ln -s /usr/bin/python2 /usr/bin/python
 
@@ -126,7 +126,7 @@ ln -s /usr/bin/python2 /usr/bin/python
 
 tg_sendstick
 
-# tg_channelcast "<b>MIUI Kernel $VERSION_TG</b> new build!" \
+tg_channelcast "<b>Nito Kernel $VERSION_TG</b> new build!" \
 		"Stage: <b>?</b>" \
 		"From <b>Nito Kernel MIUI</b>" \
 		"Under commit <b>$(git log --pretty=format:'%h' -1)</b>"
@@ -146,6 +146,12 @@ make O=out -j$(grep -c '^processor' /proc/cpuinfo) || finerr
 export BUILD_END=$(date "+%s")
 export DIFF=$(($BUILD_END - $BUILD_START))
 export BUILD_POINT=$(git log --pretty=format:'%h' -1)
+
+# Fix up wlan.ko too big issue
+./Toolchain/bin/aarch64-linux-gnu-strip --strip-unneeded --strip-debug $WLAN
+
+# Sign wlan module
+./scripts/sign-file sha512 out/signing_key.priv out/signing_key.x509 $WLAN
 
 # Pack
 cp $IMG nito-ak3/
