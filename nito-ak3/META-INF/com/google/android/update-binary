@@ -233,7 +233,7 @@ if [ $? != 0 ]; then
 fi;
 
 if [ "$(file_getprop anykernel.sh do.modules)" == 1 ]; then
-  ui_print " " "Pushing modules...";
+  ui_print "- Pushing modules...";
   $bb mount -o rw,remount -t auto /system;
   $bb mount -o rw,remount -t auto /vendor 2>/dev/null;
   cd $home/modules;
