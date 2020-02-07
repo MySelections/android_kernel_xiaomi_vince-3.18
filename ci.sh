@@ -66,7 +66,8 @@ function tg_sendstick() {
 # Fin prober
 function fin() {
 	tg_channelcast "<b>Build done!</b>" \
-	"Use $(($DIFF / 60)) min $(($DIFF % 60)) sec!"
+	"Use $(($DIFF / 60)) min $(($DIFF % 60)) sec!" \
+	"Make sure you are using Magisk 20.3+!"
 }
 
 # Errored prober
@@ -106,7 +107,7 @@ export IMG=$PWD/out/arch/arm64/boot/Image.gz-dtb
 export WLAN=$PWD/out/drivers/staging/prima/wlan.ko
 
 # Used for Telegram
-export VERSION_TG="MIUI"
+export VERSION_TG="Ashigaru MIUI"
 export ZIP_VERSION="MIUI"
 export BUILD_TYPE="CI"
 
@@ -125,7 +126,7 @@ ln -s /usr/bin/python2 /usr/bin/python
 tg_sendstick
 
 tg_channelcast "<b>Nito Kernel $VERSION_TG</b> new build!" \
-		"Stage: <b>?</b>" \
+		"Stage: <b>Ashigaru</b>" \
 		"From <b>Nito Kernel MIUI</b>" \
 		"Under commit <b>$(git log --pretty=format:'%h' -1)</b>"
 
