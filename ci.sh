@@ -107,9 +107,9 @@ export IMG=$PWD/out/arch/arm64/boot/Image.gz-dtb
 export WLAN=$PWD/out/drivers/staging/prima/wlan.ko
 
 # Used for Telegram
-export VERSION_TG="Ashigaru MIUI"
+export VERSION_TG="Starfall MIUI"
 export ZIP_VERSION="MIUI"
-export BUILD_TYPE="CI"
+export BUILD_TYPE="REL"
 
 # Install depth for Semaphore
 
@@ -126,7 +126,7 @@ ln -s /usr/bin/python2 /usr/bin/python
 tg_sendstick
 
 tg_channelcast "<b>Nito Kernel $VERSION_TG</b> new build!" \
-		"Stage: <b>Ashigaru</b>" \
+		"Stage: <b>Starfall</b>" \
 		"From <b>Nito Kernel MIUI</b>" \
 		"Under commit <b>$(git log --pretty=format:'%h' -1)</b>"
 
